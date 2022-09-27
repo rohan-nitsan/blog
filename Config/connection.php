@@ -7,11 +7,12 @@ class Database
     private $password = "";
     private $db_name = "blog";
 
-    public function __construct()
+    function connect_db()
     {
         $conn = new mysqli($this->host, $this->username, $this->password, $this->db_name);
         if ($conn->connect_error) {
             die("Connection Error: " . $conn->connect_error);
         }
+        return $conn;
     }
 }

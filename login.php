@@ -1,6 +1,24 @@
 <?php
 require_once 'header.php';
 ?>
+<?php
+require_once './App/function.php';
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $obj = new Users();
+    $myResult = $obj->login($email, $password);
+    $row = $myResult->fetch_array();
+    if ($row) {
+        session_start();
+        $_SESSION['email'] = $email;
+        $_SESSION['role'] = $row['role'];
+        header("location:index.php");
+    } else {
+        echo "Bye";
+    }
+}
+?>
 <section class="">
     <div class="container py-5 h-100">
         <div class="row justify-content-center align-items-center h-100">
