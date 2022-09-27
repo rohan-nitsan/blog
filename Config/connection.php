@@ -15,4 +15,3 @@ class Database
         }
     }
 }
-$obj = new Database();
