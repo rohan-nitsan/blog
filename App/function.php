@@ -61,4 +61,18 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+    function addCategory($name)
+    {
+        $conn = parent::connect_db();
+        $sql = "INSERT INTO categories (name) VALUES ('$name')";
+        $result = $conn->query($sql);
+        return $result;
+    }
+    function addTags($name)
+    {
+        $conn = parent::connect_db();
+        $sql = "INSERT INTO tags (name) VALUES ('$name')";
+        $result = $conn->query($sql);
+        return $result;
+    }
 }

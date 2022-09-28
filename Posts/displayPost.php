@@ -1,7 +1,11 @@
 <?php if ($_SESSION['role'] == "2") {
 ?>
 
-    <form method="POST" style="margin: 5px; padding:5px; width: 1000px;"><input type="submit" name="newPost" class="btn btn-primary" style="margin: 10px;" value="New Post" /></form>
+    <form method="POST" style="margin: 5px; padding:5px; width: 1000px;">
+        <input type="submit" name="newPost" class="btn btn-primary" style="margin: 10px;" value="New Post" />
+    </form>
+    <a href="Category/addCategory.php"><button class="btn btn-primary" style="margin: 10px;">Add Category</button></a>
+    <a href="Tags/addTag.php"><button class="btn btn-primary" style="margin: 10px;">Add Tag</button></a>
 <?php
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if (isset($_POST['newPost'])) {
@@ -15,6 +19,7 @@
     }
 }
 ?>
+
 <div class="card" style="margin: 10px; margin: 0 auto; float: none;margin-bottom: 10px;">
     <?php
     while ($row = $postData->fetch_array()) {

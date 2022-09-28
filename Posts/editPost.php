@@ -1,6 +1,6 @@
 <?php
 require_once '../Config/connection.php';
-include '../App/function.php';
+require_once '../App/function.php';
 $post_id = $_GET['post_id'];
 
 $obj = new Users();
