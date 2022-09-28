@@ -4,6 +4,7 @@ if (!$_SESSION['email']) {
     header("location:login.php");
 }
 if ($_SESSION['email'] && $_SESSION['role']) {
+    require_once 'Config/connection.php';
     require_once './App/function.php';
     require_once 'header.php';
     $obj = new Users();

@@ -28,7 +28,12 @@
                 <p class="card-text" style=" text-align: justify;text-justify: inter-word;"><?php echo $row['description']; ?></p>
             </div>
             <div class="card-footer text-muted">
-                <?php echo $row['created']; ?>
+                <?php echo $row['created'];
+                if ($row['author'] == $data['id']) {
+                    // header('location:Posts/editPost.php');
+                    echo "<a style='float:right; color:blue;' href='Posts/editPost.php?post_id=" . $row['id'] . "'>Edit</a>";
+                }
+                ?>
             </div>
         </div>
     <?php

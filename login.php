@@ -2,7 +2,8 @@
 require_once 'header.php';
 ?>
 <?php
-require_once './App/function.php';
+require_once 'Config/connection.php';
+require_once 'App/function.php';
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];

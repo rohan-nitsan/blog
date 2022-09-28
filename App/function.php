@@ -1,7 +1,5 @@
 <?php
 
-require_once './Config/connection.php';
-
 class Users extends Database
 {
 
@@ -47,5 +45,20 @@ class Users extends Database
         $conn = parent::connect_db();
         $sql = "INSERT INTO posts (author,category,tags,title,description) VALUES ('$author_id','$data_array[category]','$data_array[tag]','$data_array[title]','$data_array[description]')";
         $result = $conn->query($sql);
+        return $result;
+    }
+    function getPostData($post_id)
+    {
+        $conn = parent::connect_db();
+        $sql = "SELECT * FROM `posts` WHERE `id`='$post_id'";
+        $result = $conn->query($sql);
+        return $result;
+    }
+    function updatePost($post_id, $data_array)
+    {
+        $conn = parent::connect_db();
+        $sql = "UPDATE posts SET  category='$data_array[category]', tags='$data_array[tag]',title='$data_array[title]',description='$data_array[description]' WHERE id='$post_id'";
+        $result = $conn->query($sql);
+        return $result;
     }
 }
