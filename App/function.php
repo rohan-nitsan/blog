@@ -38,7 +38,7 @@ class Users extends Database
     function getPosts()
     {
         $conn = parent::connect_db();
-        $sql = "SELECT * FROM posts";
+        $sql = "SELECT * FROM posts ORDER BY id DESC";
         $result = $conn->query($sql);
         return $result;
     }
