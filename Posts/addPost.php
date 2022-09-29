@@ -19,7 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <!-- Bootstrap CSS -->
     <link href="../Assets/CSS/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <title>New Post</title>
 </head>
 
@@ -39,25 +40,26 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col col-md-6">
+                                    <div class="col col-md-12">
                                         <h5>Category:</h5>
-                                        <select name="category" id="">
-                                            <option value="" selected>Select</option>
+                                        <select name="category[]" id="" class="multiple-select col col-md-10" multiple>
                                             <?php
                                             while ($row = $categories->fetch_array()) {
-                                                echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
+                                                echo "<option value=" . $row['name'] . ">" . $row['name'] . "</option>";
                                             }
 
                                             ?>
                                         </select>
                                     </div>
-                                    <div class="col col-md-6">
+                                    
+                                </div>
+                                <div class="row">
+                                <div class="col col-md-12">
                                         <h5>Tag:</h5>
-                                        <select name="tag" id="">
-                                            <option value="" selected>Select</option>
+                                        <select name="tag[]" id="" class="multiple-select col col-md-10" multiple>
                                             <?php
                                             while ($row = $tags->fetch_array()) {
-                                                echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
+                                                echo "<option value=" . $row['name'] . ">" . $row['name'] . "</option>";
                                             }
 
                                             ?>
@@ -89,7 +91,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <!-- Bootstrap Script -->
     <script src="../Assets/JS/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+    <!-- JQuery CDN      -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Select2   -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(".multiple-select").select2({
+            // maximumSelectionLength: 2
+        });
+    </script>
 </body>
 
 </html>

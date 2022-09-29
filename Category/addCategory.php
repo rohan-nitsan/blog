@@ -7,6 +7,7 @@ $obj = new Users();
 $categories = $obj->getCategory();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $obj->addCategory($_POST['category']);
+    echo "<script>window.location.href='addCategory.php'</script>";
 }
 ?>
 
@@ -48,10 +49,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <?php require_once 'displayCategory.php' ?>
                             </div>
                             <div class="row">
-                            <a href="../index.php"><button class="btn btn-primary">Home</button></a>
+                                <a href="../index.php"><button class="btn btn-primary">Home</button></a>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

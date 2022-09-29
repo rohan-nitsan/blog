@@ -24,9 +24,31 @@ if ($_SESSION['role'] == "2") {
             <div class="card-footer text-muted">
                 <?php echo $row['created'];
                 if ($row['author'] == $data['id']) {
-                    echo "<a style='float:right; color:blue;' href='Posts/editPost.php?post_id=" . $row['id'] . "'>Edit</a>";
-                }
+                    echo "<a style='float:right; color:blue;' href='Posts/editPost.php?post_id=" . $row['id'] . "'><button class='btn btn-warning'>Edit</button></a>";
+                    // echo "<a style='float:left; color:blue;' href='Posts/deletePost.php?post_id=" . $row['id'] . "'><button class='btn btn-danger'>Delete</button></a>";
                 ?>
+                    <button style='float:left;' type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $row['id']; ?>">
+                        Delete
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are ou sure you want to delete this post?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a href="Posts/deletePost.php?post_id=<?php echo $row['id']; ?>"><button type="button" class="btn btn-danger">Delete</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
         </div>
     <?php

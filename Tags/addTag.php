@@ -5,6 +5,7 @@ require_once '../App/function.php';
 $obj = new Users();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $obj->addTags($_POST['tag']);
+    echo "<script>window.location.href='addTag.php'</script>";
 }
 ?>
 <!doctype html>

@@ -42,10 +42,18 @@ class Users extends Database
     }
     function addPost($author_id, $data_array)
     {
+        $categories = "";
+        foreach ($data_array['category'] as $cat) {
+            $categories .= $cat . ",";
+        }
+        $tags = "";
+        foreach ($data_array['tag'] as $myTag) {
+            $tags .= $myTag . ",";
+        }
         $conn = parent::connect_db();
-        $sql = "INSERT INTO posts (author,category,tags,title,description) VALUES ('$author_id','$data_array[category]','$data_array[tag]','$data_array[title]','$data_array[description]')";
+        $sql = "INSERT INTO posts (author,category,tags,title,description) VALUES ('$author_id','$categories','$tags','$data_array[title]','$data_array[description]')";
         $result = $conn->query($sql);
-        // return $result;
+        return $result;
     }
     function getPostData($post_id)
     {
@@ -112,6 +120,12 @@ class Users extends Database
     {
         $conn = parent::connect_db();
         $sql = "DELETE FROM categories WHERE id='$id'";
+        $result = $conn->query($sql);
+    }
+    function deletePost($post_id)
+    {
+        $conn = parent::connect_db();
+        $sql = "DELETE FROM posts WHERE id='$post_id'";
         $result = $conn->query($sql);
     }
 }
