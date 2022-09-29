@@ -20,12 +20,28 @@ if ($_SESSION['role'] == "2") {
             <div class="card-body">
                 <h5 class="card-title"><?php echo $row['title']; ?></h5>
                 <p class="card-text" style=" text-align: justify;text-justify: inter-word;"><?php echo $row['description']; ?></p>
+
             </div>
+            <p class="card-text" style=" text-align: justify;text-justify: inter-word;">Tags:
+                <?php
+                $myTags = explode(',', $row['tags']);
+                foreach ($myTags as $myTag) {
+                ?>
+                    <span class="badge bg-primary"><?php echo $myTag; ?></span>
+                <?php } ?>
+            </p>
+            <p class="card-text" style=" text-align: justify;text-justify: inter-word;">Categories:
+                <?php
+                $myCat = explode(',', $row['category']);
+                foreach ($myCat as $cat) {
+                ?>
+                    <span class="badge bg-success"><?php echo $cat; ?></span>
+                <?php } ?>
+            </p>
             <div class="card-footer text-muted">
                 <?php echo $row['created'];
                 if ($row['author'] == $data['id']) {
                     echo "<a style='float:right; color:blue;' href='Posts/editPost.php?post_id=" . $row['id'] . "'><button class='btn btn-warning'>Edit</button></a>";
-                    // echo "<a style='float:left; color:blue;' href='Posts/deletePost.php?post_id=" . $row['id'] . "'><button class='btn btn-danger'>Delete</button></a>";
                 ?>
                     <button style='float:left;' type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $row['id']; ?>">
                         Delete

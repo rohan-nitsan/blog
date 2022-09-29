@@ -30,8 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <!-- Bootstrap CSS -->
     <link href="../Assets/CSS/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <title>New Post</title>
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <title>Update Post</title>
 </head>
 
 <body>
@@ -50,34 +51,40 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col col-md-6">
+                                    <div class="col col-md-12">
                                         <h5>Category:</h5>
-                                        <select name="category" id="">
+                                        <select name="category[]" id="" class="multiple-select col col-md-10" multiple>
 
                                             <?php
+                                            $myCategory = explode(',', $myData['category']);
                                             while ($row = $categories->fetch_array()) {
-                                                if ($myData['category'] == $row['id']) {
-                                                    echo "<option value=" . $row['id'] . "selected>" . $row['name'] . "</option>";
-                                                } else {
-                                                    echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
-                                                }
-                                            }
                                             ?>
+                                                <option value="<?php echo $row['name']; ?>" <?php foreach ($myCategory as $cat) {
+                                                                                                if ($cat == $row['name']) {
+                                                                                                    echo 'selected';
+                                                                                                }
+                                                                                            } ?>><?php echo $row['name']; ?></option>
+
+                                            <?php } ?>
                                         </select>
                                     </div>
-                                    <div class="col col-md-6">
+                                </div>
+                                <div class="row">
+                                    <div class="col col-md-12">
                                         <h5>Tag:</h5>
-                                        <select name="tag" id="">
-
+                                        <select name="tag[]" id="" class="multiple-select col col-md-10" multiple>
                                             <?php
+                                            $myTags = explode(',', $myData['tags']);
+
                                             while ($row = $tags->fetch_array()) {
-                                                if ($myData['category'] == $row['id']) {
-                                                    echo "<option value=" . $row['id'] . "selected>" . $row['name'] . "</option>";
-                                                } else {
-                                                    echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
-                                                }
-                                            }
                                             ?>
+                                                <option value="<?php echo $row['name']; ?>" <?php foreach ($myTags as $tag) {
+                                                                                                if ($tag == $row['name']) {
+                                                                                                    echo 'selected';
+                                                                                                }
+                                                                                            } ?>><?php echo $row['name']; ?></option>
+
+                                            <?php } ?>
 
                                         </select>
                                     </div>
@@ -91,8 +98,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                 <div class="row" style="margin-top: 3px;">
                                     <div class="col col-md-2">
                                         <button class="btn btn-primary">Back</button>
-                                    </div>
-                                    <div class="col col-md-2">
                                         <input type="submit" name="update" value="Update" class="btn btn-success" id="">
                                     </div>
                                 </div>
@@ -107,7 +112,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <!-- Bootstrap Script -->
     <script src="../Assets/JS/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+    <script src="../Assets/JS/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- JQuery CDN      -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Select2   -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(".multiple-select").select2({
+            // maximumSelectionLength: 2
+        });
+    </script>
 </body>
 
 </html>
