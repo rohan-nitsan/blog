@@ -102,4 +102,16 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+    function deleteTag($id)
+    {
+        $conn = parent::connect_db();
+        $sql = "DELETE FROM tags WHERE id='$id'";
+        $result = $conn->query($sql);
+    }
+    function deleteCat($id)
+    {
+        $conn = parent::connect_db();
+        $sql = "DELETE FROM categories WHERE id='$id'";
+        $result = $conn->query($sql);
+    }
 }
