@@ -1,8 +1,8 @@
 <?php
+
 require_once '../Config/connection.php';
 require_once '../App/function.php';
 $obj = new Users();
-$categories = $obj->getTags();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $obj->addTags($_POST['tag']);
 }

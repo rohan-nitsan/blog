@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         session_start();
         $_SESSION['email'] = $email;
         $_SESSION['role'] = $row['role'];
+        $_SESSION['id'] = $row['id'];
+        $_SESSION['set'] = 1;
         header("location:index.php");
     } else {
         echo "Bye";

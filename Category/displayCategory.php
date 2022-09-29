@@ -1,4 +1,5 @@
 <?php
+
 require_once '../Config/connection.php';
 require_once '../App/function.php';
 ?>
@@ -12,8 +13,8 @@ require_once '../App/function.php';
         while ($row = $categories->fetch_assoc()) {
         ?>
             <td><?php echo $row['name'] ?></td>
-            <td>Edit</td>
-            <td>Delete</td>
+            <td><a href="editCategory.php?id=<?php echo $row['id']; ?>"><button>Edit</button></a></td>
+            <td><a href="deleteCategory.php?id=<?php echo $row['id']; ?>"><button>Delete</button></a></td>
     </tr>
 <?php } ?>
 </table>

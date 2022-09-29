@@ -9,6 +9,7 @@ if ($_SESSION['email'] && $_SESSION['role']) {
     require_once 'header.php';
     $obj = new Users();
     $data = $obj->select($_SESSION['email']);
+    
 
     if ($_SESSION['role'] == 2) {
         require_once 'author_nav.php';

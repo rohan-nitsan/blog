@@ -45,7 +45,7 @@ class Users extends Database
         $conn = parent::connect_db();
         $sql = "INSERT INTO posts (author,category,tags,title,description) VALUES ('$author_id','$data_array[category]','$data_array[tag]','$data_array[title]','$data_array[description]')";
         $result = $conn->query($sql);
-        return $result;
+        // return $result;
     }
     function getPostData($post_id)
     {
@@ -59,7 +59,6 @@ class Users extends Database
         $conn = parent::connect_db();
         $sql = "UPDATE posts SET  category='$data_array[category]', tags='$data_array[tag]',title='$data_array[title]',description='$data_array[description]' WHERE id='$post_id'";
         $result = $conn->query($sql);
-        return $result;
     }
     function addCategory($name)
     {
@@ -72,6 +71,34 @@ class Users extends Database
     {
         $conn = parent::connect_db();
         $sql = "INSERT INTO tags (name) VALUES ('$name')";
+        $result = $conn->query($sql);
+        return $result;
+    }
+    function updateTag($id, $name)
+    {
+        $conn = parent::connect_db();
+        $sql = "UPDATE tags SET name='$name' WHERE id='$id'";
+        $result = $conn->query($sql);
+        return $result;
+    }
+    function getTag($id)
+    {
+        $conn = parent::connect_db();
+        $sql = "SELECT * FROM tags WHERE id='$id'";
+        $result = $conn->query($sql);
+        return $result;
+    }
+    function updateCategory($id, $name)
+    {
+        $conn = parent::connect_db();
+        $sql = "UPDATE categories SET name='$name' WHERE id='$id'";
+        $result = $conn->query($sql);
+        return $result;
+    }
+    function getCat($id)
+    {
+        $conn = parent::connect_db();
+        $sql = "SELECT * FROM categories WHERE id='$id'";
         $result = $conn->query($sql);
         return $result;
     }
