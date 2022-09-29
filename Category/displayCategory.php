@@ -3,18 +3,29 @@
 require_once '../Config/connection.php';
 require_once '../App/function.php';
 ?>
-<table border="2px" cellspacing="2px" cellpadding="2px">
-    <tr>
-        <th>Name</th>
-        <th colspan="2">Action</th>
-    </tr>
-    <tr>
-        <?php
-        while ($row = $categories->fetch_assoc()) {
-        ?>
-            <td><?php echo $row['name'] ?></td>
-            <td><a href="editCategory.php?id=<?php echo $row['id']; ?>"><button>Edit</button></a></td>
-            <td><a href="deleteCategory.php?id=<?php echo $row['id']; ?>"><button>Delete</button></a></td>
-    </tr>
-<?php } ?>
-</table>
+
+<div class="col col-md-10">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-center" scope="col" colspan="3">Categories</th>
+            </tr>
+            <tr>
+                <th scope="col" class="text-center">Name</th>
+                <th scope="col" class="text-center" colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <?php
+                while ($row = $categories->fetch_assoc()) {
+                ?>
+                    <td><?php echo $row['name'] ?></td>
+                    <td><a href="editCategory.php?id=<?php echo $row['id']; ?>"><button class="btn btn-warning">Edit</button></a></td>
+                    <td><a href="deleteCategory.php?id=<?php echo $row['id']; ?>"><button class="btn btn-danger">Delete</button></a></td>
+            </tr>
+        <?php } ?>
+
+        </tbody>
+    </table>
+</div>
