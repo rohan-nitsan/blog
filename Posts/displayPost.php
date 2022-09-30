@@ -2,8 +2,8 @@
 if ($_SESSION['role'] == "2") {
 ?>
     <a href="Posts/addPost.php"><button class="btn btn-primary" style="margin: 10px;">New Post</button></a>
-    <a href="Category/addCategory.php"><button class="btn btn-primary" style="margin: 10px;">Add Category</button></a>
-    <a href="Tags/addTag.php"><button class="btn btn-primary" style="margin: 10px;">Add Tag</button></a>
+    <a href="Category/addCategory.php"><button class="btn btn-primary" style="margin: 10px;">Categories</button></a>
+    <a href="Tags/addTag.php"><button class="btn btn-primary" style="margin: 10px;">Tags</button></a>
 <?php
 
 }

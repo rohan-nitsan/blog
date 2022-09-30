@@ -16,10 +16,7 @@ $postData = $obj->getPostData($post_id);
 $myData = $postData->fetch_assoc();
 $myTags = $obj->myTags($post_id);
 $myCategory = $obj->myCategory($post_id);
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $obj->updatePost($post_id, $_POST);
-    echo "<script>window.location.href='../index.php'</script>";
-}
+
 
 ?>
 
@@ -27,7 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <html lang="en">
 
 <head>
-
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 
     <!-- Bootstrap CSS -->
     <link href="../Assets/CSS/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -49,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                     <div class="col col-md-10">
                                         <h5>Title:</h5>
                                         <input type="text" class="form-control" name="title" id="" value="<?php echo $myData['title']; ?>">
+                                        <p class="error" id="title_error"></p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -65,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                                                                             } ?>><?php echo $row['name']; ?></option>
                                             <?php } ?>
                                         </select>
+                                        <p class="error" id="category_error"></p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -82,12 +85,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
                                             <?php } ?>
                                         </select>
+                                        <p class="error" id="tag_error"></p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-10">
                                         <h5>Description:</h5>
                                         <textarea type="text" class="form-control" rows="5" name="description" id=""><?php echo $myData['description']; ?></textarea>
+                                        <p class="error" id="description_error"></p>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top: 3px;">
@@ -122,4 +127,29 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </body>
 
 </html>
-<?php require_once '../footer.php'; ?>
+<?php
+require_once '../footer.php';
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $valid = true;
+    if (empty($_POST['title'])) {
+        $obj->validation_error('title_error', '* Please Enter Title');
+        $valid = false;
+    }
+    if (!$_POST['category']) {
+        $obj->validation_error('category_error', '* Please Select Category');
+        $valid = false;
+    }
+    if (!$_POST['tag']) {
+        $obj->validation_error('tag_error', '* Please Select Tag');
+        $valid = false;
+    }
+    if (empty($_POST['description'])) {
+        $obj->validation_error('description_error', '* Please Enter Content');
+        $valid = false;
+    }
+    if ($valid) {
+        $obj->updatePost($post_id, $_POST);
+        echo "<script>window.location.href='../index.php'</script>";
+    }
+}
+?>
