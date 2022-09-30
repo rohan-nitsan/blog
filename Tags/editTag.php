@@ -10,15 +10,16 @@ $obj = new Users();
 $tag = $obj->getTag($_GET['id']);
 $tagData = $tag->fetch_assoc();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $obj->updateTag($_GET['id'], $_POST['tag']);
-    echo "<script>window.location.href='addTag.php'</script>";
-}
+
 ?>
 <html lang="en">
 
 <head>
-
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 
     <!-- Bootstrap CSS -->
     <link href="../Assets/CSS/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -38,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="row">
                                     <div class="col col-md-7">
                                         <input type="text" class="form-control" name="tag" id="" value="<?php echo $tagData['name']; ?>" placeholder="Enter Tag">
+                                        <p class="error" id="tag_error"></p>
                                     </div>
                                     <div class="col col-md-3">
                                         <input type="submit" name="update" class="btn btn-success" value="Update">
@@ -64,3 +66,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST['tag'])) {
+        $obj->validation_error('tag_error', '* Please Enter Tag');
+    } else {
+        $obj->updateTag($_GET['id'], $_POST['tag']);
+        echo "<script>window.location.href='addTag.php'</script>";
+    }
+}
+?>

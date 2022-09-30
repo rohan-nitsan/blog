@@ -7,16 +7,18 @@ require_once '../Config/connection.php';
 require_once '../App/function.php';
 require_once '../author_nav.php';
 $obj = new Users();
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $obj->addTags($_POST['tag']);
-    echo "<script>window.location.href='addTag.php'</script>";
-}
+
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
 
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 
     <!-- Bootstrap CSS -->
     <link href="../Assets/CSS/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -36,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="row">
                                     <div class="col col-md-7">
                                         <input type="text" class="form-control" name="tag" id="" placeholder="Enter Tag">
+                                        <p id="tag_error" class="error"></p>
                                     </div>
                                     <div class="col col-md-3">
                                         <input type="submit" name="add" class="btn btn-success" value="Add">
@@ -65,3 +68,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST['tag'])) {
+        $obj->validation_error('tag_error', '* Please Enter Tag');
+    } else {
+        $obj->addTags($_POST['tag']);
+        echo "<script>window.location.href='addTag.php'</script>";
+    }
+}
+?>
