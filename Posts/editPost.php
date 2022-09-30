@@ -14,8 +14,8 @@ $categories = $obj->getCategory();
 $tags = $obj->getTags();
 $postData = $obj->getPostData($post_id);
 $myData = $postData->fetch_assoc();
-
-
+$myTags = $obj->myTags($post_id);
+$myCategory = $obj->myCategory($post_id);
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $obj->updatePost($post_id, $_POST);
     echo "<script>window.location.href='../index.php'</script>";
@@ -55,7 +55,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                     <div class="col col-md-12">
                                         <h5>Category:</h5>
                                         <select name="category[]" id="" class="multiple-select col col-md-10" multiple>
-
+                                            <?php
+                                            while ($row = $categories->fetch_array()) {
+                                            ?>
+                                                <option value="<?php echo $row['id'] ?>" <?php foreach ($myCategory as $myCat) {
+                                                                                                if ($row['id'] == $myCat['category_id']) {
+                                                                                                    echo "selected";
+                                                                                                }
+                                                                                            } ?>><?php echo $row['name']; ?></option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>
@@ -63,8 +71,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                     <div class="col col-md-12">
                                         <h5>Tag:</h5>
                                         <select name="tag[]" id="" class="multiple-select col col-md-10" multiple>
-                                            
+                                            <?php
+                                            while ($row = $tags->fetch_array()) {
+                                            ?>
+                                                <option value="<?php echo $row['id']; ?>" <?php foreach ($myTags as $myTag) {
+                                                                                                if ($row['id'] == $myTag['tag_id']) {
+                                                                                                    echo "selected";
+                                                                                                }
+                                                                                            } ?>><?php echo $row['name']; ?></option>
 
+                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>

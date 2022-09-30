@@ -56,7 +56,6 @@ class Users extends Database
             $sql3 = "INSERT INTO post_category (post_id,category_id) VALUES ('$id','$myCat')";
             $result2 = $conn->query($sql3);
         }
-        // return $result;
     }
     function getPostData($post_id)
     {
@@ -69,8 +68,23 @@ class Users extends Database
     {
 
         $conn = parent::connect_db();
-        $sql = "UPDATE posts SET  category='$data_array[category]', tags='$data_array[tags]',title='$data_array[title]',description='$data_array[description]' WHERE id='$post_id'";
-        $result = $conn->query($sql);
+        $sql2 = "DELETE FROM post_tags WHERE post_id='$post_id'";
+        $conn->query($sql2);
+        $sql2 = "DELETE FROM post_category WHERE post_id='$post_id'";
+        $conn->query($sql2);
+        $tag_count = $category_count = 0;
+        foreach ($data_array['tag'] as $myTag) {
+            $sql4 = "INSERT INTO post_tags (post_id,tag_id) VALUES ('$post_id','$myTag')";
+            $conn->query($sql4);
+            $tag_count += 1;
+        }
+        foreach ($data_array['category'] as $myCat) {
+            $sql5 = "INSERT INTO post_category (post_id,category_id) VALUES ('$post_id','$myCat')";
+            $conn->query($sql5);
+            $category_count += 1;
+        }
+        $sql = "UPDATE posts SET  category='$category_count', tags='$tag_count',title='$data_array[title]',description='$data_array[description]' WHERE id='$post_id'";
+        $conn->query($sql);
     }
     function addCategory($name)
     {
@@ -131,5 +145,19 @@ class Users extends Database
         $conn = parent::connect_db();
         $sql = "DELETE FROM posts WHERE id='$post_id'";
         $result = $conn->query($sql);
+    }
+    function myTags($post_id)
+    {
+        $conn = parent::connect_db();
+        $sql = "SELECT tag_id FROM post_tags WHERE post_id='$post_id'";
+        $result = $conn->query($sql);
+        return $result;
+    }
+    function myCategory($post_id)
+    {
+        $conn = parent::connect_db();
+        $sql = "SELECT category_id FROM post_category WHERE post_id='$post_id'";
+        $result = $conn->query($sql);
+        return $result;
     }
 }
