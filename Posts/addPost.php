@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!$_SESSION['set']){
+if (!$_SESSION['set']) {
     header('location:../login.php');
 }
 require_once '../Config/connection.php';
@@ -49,21 +49,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                         <select name="category[]" id="" class="multiple-select col col-md-10" multiple>
                                             <?php
                                             while ($row = $categories->fetch_array()) {
-                                                echo "<option value=" . $row['name'] . ">" . $row['name'] . "</option>";
+                                                echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
                                             }
 
                                             ?>
                                         </select>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="row">
-                                <div class="col col-md-12">
+                                    <div class="col col-md-12">
                                         <h5>Tag:</h5>
                                         <select name="tag[]" id="" class="multiple-select col col-md-10" multiple>
                                             <?php
                                             while ($row = $tags->fetch_array()) {
-                                                echo "<option value=" . $row['name'] . ">" . $row['name'] . "</option>";
+                                                echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
                                             }
 
                                             ?>

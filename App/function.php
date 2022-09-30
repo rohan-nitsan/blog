@@ -43,9 +43,20 @@ class Users extends Database
     function addPost($author_id, $data_array)
     {
         $conn = parent::connect_db();
-        $sql = "INSERT INTO posts (author,category,tags,title,description) VALUES ('$author_id','$categories','$tags','$data_array[title]','$data_array[description]')";
+        $total_tags = count($data_array['tag']);
+        $total_category = count($data_array['category']);
+        $sql = "INSERT INTO posts (author,category,tags,title,description) VALUES ('$author_id','$total_category','$total_tags','$data_array[title]','$data_array[description]')";
         $result = $conn->query($sql);
-        return $result;
+        $id = mysqli_insert_id($conn);
+        foreach ($data_array['tag'] as $myTag) {
+            $sql2 = "INSERT INTO post_tags (post_id,tag_id) VALUES ('$id','$myTag')";
+            $result2 = $conn->query($sql2);
+        }
+        foreach ($data_array['category'] as $myCat) {
+            $sql3 = "INSERT INTO post_category (post_id,category_id) VALUES ('$id','$myCat')";
+            $result2 = $conn->query($sql3);
+        }
+        // return $result;
     }
     function getPostData($post_id)
     {
