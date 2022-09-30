@@ -10,15 +10,16 @@ $obj = new Users();
 $cat = $obj->getCat($_GET['id']);
 $catData = $cat->fetch_assoc();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $obj->updateCategory($_GET['id'], $_POST['category']);
-    echo "<script>window.location.href='addCategory.php'</script>";
-}
+
 ?>
 <html lang="en">
 
 <head>
-
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 
     <!-- Bootstrap CSS -->
     <link href="../Assets/CSS/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -38,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="row">
                                     <div class="col col-md-7">
                                         <input type="text" class="form-control" name="category" id="" value="<?php echo $catData['name']; ?>" placeholder="Enter Tag">
+                                        <p class="error" id="category_error"></p>
                                     </div>
                                     <div class="col col-md-3">
                                         <input type="submit" name="update" class="btn btn-success" value="Update">
@@ -64,3 +66,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST['category'])) {
+        $obj->validation_error('category_error', '* Please Enter Category');
+    } else {
+        $obj->updateCategory($_GET['id'], $_POST['category']);
+        echo "<script>window.location.href='addCategory.php'</script>";
+    }
+}
+?>
