@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                 </div>
                                 <div class="row" style="margin-top: 3px;">
                                     <div class="col col-md-2">
-                                        <button class="btn btn-primary">Back</button>
+                                        <a href="../index.php"><button class="btn btn-primary">Back</button></a>
                                         <input type="submit" name="update" value="Update" class="btn btn-success" id="">
                                     </div>
                                 </div>
@@ -112,6 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Select2   -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- Text Editor -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         $(".multiple-select").select2({
             // maximumSelectionLength: 2
@@ -120,4 +122,4 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </body>
 
 </html>
-<?php require_once 'footer.php'; ?>
+<?php require_once '../footer.php'; ?>

@@ -84,6 +84,7 @@ class Users extends Database
             $category_count += 1;
         }
         $sql = "UPDATE posts SET  category='$category_count', tags='$tag_count',title='$data_array[title]',description='$data_array[description]' WHERE id='$post_id'";
+
         $conn->query($sql);
     }
     function addCategory($name)
@@ -159,5 +160,13 @@ class Users extends Database
         $sql = "SELECT category_id FROM post_category WHERE post_id='$post_id'";
         $result = $conn->query($sql);
         return $result;
+    }
+    function validation_error($id, $msg)
+    {
+        echo "
+        <script>
+            document.getElementById('$id').innerText='$msg';
+        </script>
+    ";
     }
 }

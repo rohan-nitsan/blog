@@ -7,6 +7,7 @@ if ($_SESSION['role'] == "2") {
 <?php
 
 }
+
 ?>
 
 <div class="card" style="margin: 10px; margin: 0 auto; float: none;margin-bottom: 10px;">
@@ -20,12 +21,27 @@ if ($_SESSION['role'] == "2") {
             <div class="card-body">
                 <h5 class="card-title"><?php echo $row['title']; ?></h5>
                 <p class="card-text" style=" text-align: justify;text-justify: inter-word;"><?php echo $row['description']; ?></p>
-
             </div>
             <p class="card-text" style=" text-align: justify;text-justify: inter-word;">Tags:
+                <?php
+                    $myTags = $obj->myTags($row['id']);
+                    foreach($myTags as $tag){
+                        foreach($obj->getTag($tag['tag_id']) as $tag){
+                            echo '<span class="badge bg-info" style="margin:2px;">'.$tag['name'].'</span>';
+                        }
+                    }
+                ?>
             </p>
             <p class="card-text" style=" text-align: justify;text-justify: inter-word;">Categories:
-
+                <?php
+                    $myCategory = $obj->myCategory($row['id']);
+                   foreach($myCategory as $a){
+                    // echo $a['category_id'];
+                    foreach($obj->getCat($a['category_id']) as $cat){
+                        echo '<span class="badge bg-success" style="margin:2px;">'.$cat['name'].'</span>';
+                    }
+                   }
+                ?>
             </p>
             <div class="card-footer text-muted">
                 <?php echo $row['created'];
