@@ -2,6 +2,7 @@
 
 require_once '../Config/connection.php';
 require_once '../App/function.php';
+require_once '../author_nav.php';
 $tags = $obj->getTags();
 ?>
 <div class="col col-md-10">

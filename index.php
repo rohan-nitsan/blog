@@ -9,7 +9,7 @@ if ($_SESSION['email'] && $_SESSION['role']) {
     require_once 'header.php';
     $obj = new Users();
     $data = $obj->select($_SESSION['email']);
-    
+
 
     if ($_SESSION['role'] == 2) {
         require_once 'author_nav.php';
@@ -19,16 +19,11 @@ if ($_SESSION['email'] && $_SESSION['role']) {
     }
     if ($_SESSION['role'] == 3) {
         require_once 'user_nav.php';
+        // require_once 'Posts/displayPost.php';
     }
 ?>
     
 <?php
-    if (isset($_POST['logout'])) {
-        session_unset();
-        session_destroy();
-        echo "<script>window.location.href='login.php'</script>";
-        // header('location:login.php');
-    }
     require_once 'footer.php';
 }
 

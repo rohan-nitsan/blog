@@ -42,14 +42,6 @@ class Users extends Database
     }
     function addPost($author_id, $data_array)
     {
-        $categories = "";
-        foreach ($data_array['category'] as $cat) {
-            $categories .= $cat . ",";
-        }
-        $tags = "";
-        foreach ($data_array['tag'] as $myTag) {
-            $tags .= $myTag . ",";
-        }
         $conn = parent::connect_db();
         $sql = "INSERT INTO posts (author,category,tags,title,description) VALUES ('$author_id','$categories','$tags','$data_array[title]','$data_array[description]')";
         $result = $conn->query($sql);
@@ -64,17 +56,9 @@ class Users extends Database
     }
     function updatePost($post_id, $data_array)
     {
-        print_r($data_array['category']);
-        $categories = "";
-        foreach ($data_array['category'] as $cat) {
-            $categories .= $cat . ",";
-        }
-        $tags = "";
-        foreach ($data_array['tag'] as $myTag) {
-            $tags .= $myTag . ",";
-        }
+
         $conn = parent::connect_db();
-        $sql = "UPDATE posts SET  category='$categories', tags='$tags',title='$data_array[title]',description='$data_array[description]' WHERE id='$post_id'";
+        $sql = "UPDATE posts SET  category='$data_array[category]', tags='$data_array[tags]',title='$data_array[title]',description='$data_array[description]' WHERE id='$post_id'";
         $result = $conn->query($sql);
     }
     function addCategory($name)

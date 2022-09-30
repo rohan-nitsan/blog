@@ -1,5 +1,7 @@
 <?php
-
+if (!$_SESSION['set']) {
+    header('location:../login.php');
+}
 require_once '../Config/connection.php';
 require_once '../App/function.php';
 ?>

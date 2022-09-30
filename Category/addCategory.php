@@ -1,8 +1,11 @@
 <?php
 session_start();
-
+if(!$_SESSION['set']){
+    header('location:../login.php');
+}
 require_once '../Config/connection.php';
 require_once '../App/function.php';
+require_once '../author_nav.php';
 $obj = new Users();
 $categories = $obj->getCategory();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

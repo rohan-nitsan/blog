@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <h1 class="navbar-brand">Welcome <?php echo $data['firstname']; ?></h1>
+        <h1 class="navbar-brand">Welcome</h1>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,9 +10,14 @@
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
             </ul>
-            <form action="" method="POST">
-                <input type="submit" value="Logout" class="btn btn-danger" name="logout">
-            </form>
+            <?php
+            if ($_SERVER['PHP_SELF'] == "/blog/index.php") {
+            ?>
+                <a href="logout.php"><button class="btn btn-danger">Logout</button></a>
+            <?php } else {
+            ?>
+                <a href="../logout.php"><button class="btn btn-danger">Logout</button></a>
+            <?php } ?>
         </div>
     </div>
 </nav>

@@ -26,9 +26,7 @@
                     </ul>
                 </li>
             </ul>
-            <form action="" method="POST">
-                <input type="submit" value="Logout" class="btn btn-danger" name="logout">
-            </form>
+            <a href="logout.php"><button class="btn btn-danger">Logout</button></a>
         </div>
     </div>
 </nav>

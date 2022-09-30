@@ -23,20 +23,9 @@ if ($_SESSION['role'] == "2") {
 
             </div>
             <p class="card-text" style=" text-align: justify;text-justify: inter-word;">Tags:
-                <?php
-                $myTags = explode(',', $row['tags']);
-                foreach ($myTags as $myTag) {
-                ?>
-                    <span class="badge bg-primary"><?php echo $myTag; ?></span>
-                <?php } ?>
             </p>
             <p class="card-text" style=" text-align: justify;text-justify: inter-word;">Categories:
-                <?php
-                $myCat = explode(',', $row['category']);
-                foreach ($myCat as $cat) {
-                ?>
-                    <span class="badge bg-success"><?php echo $cat; ?></span>
-                <?php } ?>
+
             </p>
             <div class="card-footer text-muted">
                 <?php echo $row['created'];

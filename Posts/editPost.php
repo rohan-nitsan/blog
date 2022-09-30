@@ -1,11 +1,12 @@
 <?php
 session_start();
-// if(!$_SESSION['set']);
-// {
+// if ($_SESSION['set']!=1); {
 //     header('location:../login.php');
 // }
 require_once '../Config/connection.php';
 require_once '../App/function.php';
+require_once '../header.php';
+require_once '../author_nav.php';
 $post_id = $_GET['post_id'];
 
 $obj = new Users();
@@ -55,17 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                         <h5>Category:</h5>
                                         <select name="category[]" id="" class="multiple-select col col-md-10" multiple>
 
-                                            <?php
-                                            $myCategory = explode(',', $myData['category']);
-                                            while ($row = $categories->fetch_array()) {
-                                            ?>
-                                                <option value="<?php echo $row['name']; ?>" <?php foreach ($myCategory as $cat) {
-                                                                                                if ($cat == $row['name']) {
-                                                                                                    echo 'selected';
-                                                                                                }
-                                                                                            } ?>><?php echo $row['name']; ?></option>
-
-                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>
@@ -73,18 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                     <div class="col col-md-12">
                                         <h5>Tag:</h5>
                                         <select name="tag[]" id="" class="multiple-select col col-md-10" multiple>
-                                            <?php
-                                            $myTags = explode(',', $myData['tags']);
-
-                                            while ($row = $tags->fetch_array()) {
-                                            ?>
-                                                <option value="<?php echo $row['name']; ?>" <?php foreach ($myTags as $tag) {
-                                                                                                if ($tag == $row['name']) {
-                                                                                                    echo 'selected';
-                                                                                                }
-                                                                                            } ?>><?php echo $row['name']; ?></option>
-
-                                            <?php } ?>
+                                            
 
                                         </select>
                                     </div>
@@ -125,3 +104,4 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </body>
 
 </html>
+<?php require_once 'footer.php'; ?>
