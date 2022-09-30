@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!$_SESSION['set']){
+if (!$_SESSION['set']) {
     header('location:../login.php');
 }
 require_once '../Config/connection.php';
@@ -8,10 +8,6 @@ require_once '../App/function.php';
 require_once '../author_nav.php';
 $obj = new Users();
 $categories = $obj->getCategory();
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $obj->addCategory($_POST['category']);
-    echo "<script>window.location.href='addCategory.php'</script>";
-}
 ?>
 
 
@@ -20,7 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 
 <head>
-
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 
     <!-- Bootstrap CSS -->
     <link href="../Assets/CSS/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -40,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="row">
                                     <div class="col col-md-7">
                                         <input type="text" class="form-control" name="category" id="" placeholder="Enter Category">
+                                        <p class="error" id="category_error"></p>
                                     </div>
                                     <div class="col col-md-3">
                                         <input type="submit" name="add" class="btn btn-success" value="Add">
@@ -69,3 +70,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST['category'])) {
+        $obj->validation_error('category_error', '* Please Enter Category');
+    } else {
+        $obj->addCategory($_POST['category']);
+        echo "<script>window.location.href='addCategory.php'</script>";
+    }
+}
+?>
