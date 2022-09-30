@@ -81,7 +81,7 @@ $tags = $obj->getTags();
                                 </div>
                                 <div class="row" style="margin-top: 3px;">
                                     <div class="col col-md-2">
-                                        <a href="../index.php"><button class="btn btn-primary">Back</button></a>
+                                        <a href="../index.php"><button type="button" class="btn btn-primary">Back</button></a>
                                     </div>
                                     <div class="col col-md-2">
                                         <input type="submit" name="post" value="POST" class="btn btn-success" id="">
@@ -111,7 +111,6 @@ $tags = $obj->getTags();
 
 </html>
 <?php
-
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $valid = true;
     if (empty($_POST['title'])) {

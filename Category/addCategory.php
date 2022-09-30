@@ -39,11 +39,11 @@ $categories = $obj->getCategory();
                             <form action="" method="POST">
                                 <div class="row">
                                     <div class="col col-md-7">
-                                        <input type="text" class="form-control" name="category" id="" placeholder="Enter Category">
+                                        <input type="text" id="category" class="form-control" name="category" id="" placeholder="Enter Category">
                                         <p class="error" id="category_error"></p>
                                     </div>
                                     <div class="col col-md-3">
-                                        <input type="submit" name="add" class="btn btn-success" value="Add">
+                                        <input type="button" name="add" class="btn btn-success" onclick="addCategory()" value="Add">
                                     </div>
                                 </div>
                                 <br>
@@ -75,8 +75,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST['category'])) {
         $obj->validation_error('category_error', '* Please Enter Category');
     } else {
-        $obj->addCategory($_POST['category']);
-        echo "<script>window.location.href='addCategory.php'</script>";
+        // $obj->addCategory($_POST['category']);
+        // echo "<script>window.location.href='addCategory.php'</script>";
     }
 }
 ?>
+<script>
+    function addCategory() {
+        var xhttp = new XMLHttpRequest()
+        var category = document.getElementById('category').value;
+        var data = new FormData();
+        FormData.append('category', category);
+        
+    }
+</script>
