@@ -42,17 +42,19 @@ class Users extends Database
     }
     function addPost($author_id, $data_array)
     {
+        $category_array = explode(",", $data_array['category']);
+        $tag_array = explode(',', $data_array['tag']);
         $conn = parent::connect_db();
-        $total_tags = count($data_array['tag']);
-        $total_category = count($data_array['category']);
+        $total_tags = count($tag_array);
+        $total_category = count($category_array);
         $sql = "INSERT INTO posts (author,category,tags,title,description) VALUES ('$author_id','$total_category','$total_tags','$data_array[title]','$data_array[description]')";
         $result = $conn->query($sql);
         $id = mysqli_insert_id($conn);
-        foreach ($data_array['tag'] as $myTag) {
+        foreach ($tag_array as $myTag) {
             $sql2 = "INSERT INTO post_tags (post_id,tag_id) VALUES ('$id','$myTag')";
             $result2 = $conn->query($sql2);
         }
-        foreach ($data_array['category'] as $myCat) {
+        foreach ($category_array as $myCat) {
             $sql3 = "INSERT INTO post_category (post_id,category_id) VALUES ('$id','$myCat')";
             $result2 = $conn->query($sql3);
         }
@@ -66,19 +68,20 @@ class Users extends Database
     }
     function updatePost($post_id, $data_array)
     {
-
+        $category_array = explode(",", $data_array['category']);
+        $tag_array = explode(',', $data_array['tag']);
         $conn = parent::connect_db();
         $sql2 = "DELETE FROM post_tags WHERE post_id='$post_id'";
         $conn->query($sql2);
         $sql2 = "DELETE FROM post_category WHERE post_id='$post_id'";
         $conn->query($sql2);
         $tag_count = $category_count = 0;
-        foreach ($data_array['tag'] as $myTag) {
+        foreach ($tag_array as $myTag) {
             $sql4 = "INSERT INTO post_tags (post_id,tag_id) VALUES ('$post_id','$myTag')";
             $conn->query($sql4);
             $tag_count += 1;
         }
-        foreach ($data_array['category'] as $myCat) {
+        foreach ($category_array as $myCat) {
             $sql5 = "INSERT INTO post_category (post_id,category_id) VALUES ('$post_id','$myCat')";
             $conn->query($sql5);
             $category_count += 1;

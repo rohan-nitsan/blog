@@ -28,6 +28,10 @@ $myCategory = $obj->myCategory($post_id);
         .error {
             color: red;
         }
+
+        #editor {
+            height: 300px;
+        }
     </style>
 
     <!-- Bootstrap CSS -->
@@ -47,18 +51,18 @@ $myCategory = $obj->myCategory($post_id);
                     <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                         <div class="card-body p- p-md-3">
                             <h1 class="mb-4 pb-2 pb-md-0 mb-md-3">Update Post</h1>
-                            <form action="" method="POST" style="margin: 5px; padding:5px; width: 1000px; height: auto;">
+                            <form action="" method="POST" style="margin: 5px; padding:5px; width: 1000px; height:auto;">
                                 <div class="row">
                                     <div class="col col-md-10">
                                         <h5>Title:</h5>
-                                        <input type="text" class="form-control" name="title" id="" value="<?php echo $myData['title']; ?>">
+                                        <input type="text" class="form-control" name="title" id="title" value="<?php echo $myData['title']; ?>">
                                         <p class="error" id="title_error"></p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-12">
                                         <h5>Category:</h5>
-                                        <select name="category[]" id="" class="multiple-select col col-md-10" multiple>
+                                        <select name="category[]" id="category" class="multiple-select col col-md-10" multiple>
                                             <?php
                                             while ($row = $categories->fetch_array()) {
                                             ?>
@@ -75,7 +79,7 @@ $myCategory = $obj->myCategory($post_id);
                                 <div class="row">
                                     <div class="col col-md-12">
                                         <h5>Tag:</h5>
-                                        <select name="tag[]" id="" class="multiple-select col col-md-10" multiple>
+                                        <select name="tag[]" id="tag" class="multiple-select col col-md-10" multiple>
                                             <?php
                                             while ($row = $tags->fetch_array()) {
                                             ?>
@@ -100,11 +104,14 @@ $myCategory = $obj->myCategory($post_id);
                                 </div>
                                 <div class="row" style="margin-top: 3px;">
                                     <div class="col col-md-2">
-                                        <a href="../index.php"><button class="btn btn-primary">Back</button></a>
-                                        <input type="submit" name="update" value="Update" class="btn btn-success" id="">
+                                        <a href="../index.php"><button type="button" class="btn btn-primary">Back</button></a>
+                                    </div>
+                                    <div class="col col-md-">
+                                        <input type="button" name="Update" onclick="submit_data()" value="UPDATE" class="btn btn-success">
                                     </div>
                                 </div>
                             </form>
+                            <div id="status"></div>
                         </div>
                     </div>
                 </div>
@@ -136,41 +143,39 @@ $myCategory = $obj->myCategory($post_id);
             theme: 'snow'
         });
 
-
-        var form = document.querySelector('form');
-        form.onsubmit = function() {
-            // Populate hidden form on submit
-            var about = document.querySelector('input[name=description]');
-            about.value = JSON.stringify(quill.getContents());
-            return $(form).serialize(), $(form).serializeArray();
-        };
+        function submit_data() {
+            var data = new FormData();
+            data.append('post_id', <?PHP echo $post_id; ?>);
+            data.append('title', document.getElementById('title').value);
+            data.append('category', $("#category").val());
+            data.append('tag', $("#tag").val());
+            data.append('description', quill.root.innerHTML);
+            if (document.getElementById('title').value == "") {
+                document.getElementById('title_error').innerText = '* Please Enter Title';
+            } else if (document.getElementById('category').value.length == 0) {
+                document.getElementById('category_error').innerText = '* Please Select Category';
+            } else if (document.getElementById('tag').value.length == 0) {
+                document.getElementById('tag_error').innerText = '* Please Select Tag';
+            } else if (quill.root.innerText == "") {
+                document.getElementById('description_error').innerText = '* Please Enter Description';
+            } else {
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("POST", "updatePost.php", true);
+                // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.onreadystatechange = function() {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        var return_data = xhttp.responseText;
+                        document.getElementById('status').innerHTML = return_data;
+                    }
+                }
+                xhttp.send(data);
+                window.location.href = '../index.php';
+            }
+        }
     </script>
 </body>
 
 </html>
 <?php
 require_once '../footer.php';
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $valid = true;
-    if (empty($_POST['title'])) {
-        $obj->validation_error('title_error', '* Please Enter Title');
-        $valid = false;
-    }
-    if (!$_POST['category']) {
-        $obj->validation_error('category_error', '* Please Select Category');
-        $valid = false;
-    }
-    if (!$_POST['tag']) {
-        $obj->validation_error('tag_error', '* Please Select Tag');
-        $valid = false;
-    }
-    if (empty($_POST['description'])) {
-        $obj->validation_error('description_error', '* Please Enter Content');
-        $valid = false;
-    }
-    if ($valid) {
-        $obj->updatePost($post_id, $_POST);
-        echo "<script>window.location.href='../index.php'</script>";
-    }
-}
 ?>

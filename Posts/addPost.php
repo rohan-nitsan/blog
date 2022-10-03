@@ -54,7 +54,7 @@ $tags = $obj->getTags();
                                 <div class="row">
                                     <div class="col col-md-12">
                                         <h5>Category:</h5>
-                                        <select name="category[]" id="category[]" class="multiple-select col col-md-10" multiple>
+                                        <select name="category[]" id="category" class="multiple-select col col-md-10" multiple>
                                             <?php
                                             while ($row = $categories->fetch_array()) {
                                                 echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
@@ -69,7 +69,7 @@ $tags = $obj->getTags();
                                 <div class="row">
                                     <div class="col col-md-12">
                                         <h5>Tag:</h5>
-                                        <select name="tag[]" id="tag[]" class="multiple-select col col-md-10" multiple>
+                                        <select name="tag[]" id="tag" class="multiple-select col col-md-10" multiple>
                                             <?php
                                             while ($row = $tags->fetch_array()) {
                                                 echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
@@ -95,8 +95,7 @@ $tags = $obj->getTags();
                                         <a href="../index.php"><button type="button" class="btn btn-primary">Back</button></a>
                                     </div>
                                     <div class="col col-md-2">
-                                        <input type="button" name="post" onclick="submit_data()" value="POST" class="btn btn-success" id="">
-                                        <!-- <button onclick="submit_data()" class="btn btn-success">POST</button> -->
+                                        <input type="button" name="post" onclick="submit_data()" value="POST" class="btn btn-success">
                                     </div>
                                 </div>
                             </form>
@@ -137,14 +136,14 @@ $tags = $obj->getTags();
     function submit_data() {
         var data = new FormData();
         data.append('title', document.getElementById('title').value);
-        data.append('category[]', document.getElementById('category[]').value);
-        data.append('tag[]', document.getElementById('tag[]').value);
+        data.append('category', $("#category").val());
+        data.append('tag', $("#tag").val());
         data.append('description', quill.root.innerHTML);
         if (document.getElementById('title').value == "") {
             document.getElementById('title_error').innerText = '* Please Enter Title';
-        } else if (document.getElementById('category[]').value.length == 0) {
+        } else if (document.getElementById('category').value.length == 0) {
             document.getElementById('category_error').innerText = '* Please Select Category';
-        } else if (document.getElementById('tag[]').value.length == 0) {
+        } else if (document.getElementById('tag').value.length == 0) {
             document.getElementById('tag_error').innerText = '* Please Select Tag';
         } else if (quill.root.innerText == "") {
             document.getElementById('description_error').innerText = '* Please Enter Description';
