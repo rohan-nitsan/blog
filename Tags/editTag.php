@@ -22,7 +22,7 @@ $tagData = $tag->fetch_assoc();
     </style>
 
     <!-- Bootstrap CSS -->
-    <link href="../Assets/CSS/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="../Assets/CSS/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
 
     <title>Edit Tag</title>
 </head>

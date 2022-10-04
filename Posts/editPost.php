@@ -35,7 +35,7 @@ $myCategory = $obj->myCategory($post_id);
     </style>
 
     <!-- Bootstrap CSS -->
-    <link href="../Assets/CSS/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="../Assets/CSS/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- Include stylesheet -->
