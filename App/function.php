@@ -2,7 +2,11 @@
 
 class Users extends Database
 {
-
+    /*
+    * This function is used to authenticate user.
+    * If they register then it can return row else return nothing.
+    * It takes email and password for check user in validate or not.
+    */
     function login($email, $password)
     {
         $conn = parent::connect_db();
@@ -11,6 +15,10 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+
+    /*
+    * This function is used to fetch user data based on email after login.
+    */
     function select($email)
     {
         $conn = parent::connect_db();
@@ -19,6 +27,10 @@ class Users extends Database
         $data = $result->fetch_array();
         return $data;
     }
+
+    /*
+    * This function is used to fetch all categories.
+    */
     function getCategory()
     {
         $conn = parent::connect_db();
@@ -26,6 +38,10 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+
+    /*
+    * This function is used to fetch all tags.
+    */
     function getTags()
     {
         $conn = parent::connect_db();
@@ -33,6 +49,10 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+
+    /*
+    * This function is used to fetch all posts.
+    */
     function getPosts()
     {
         $conn = parent::connect_db();
@@ -40,6 +60,10 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+
+    /*
+    * This function is used to create new post.
+    */
     function addPost($author_id, $data_array)
     {
         $category_array = explode(",", $data_array['category']);
@@ -59,6 +83,10 @@ class Users extends Database
             $result2 = $conn->query($sql3);
         }
     }
+
+    /*
+    * This function is used to fetch particular post data.
+    */
     function getPostData($post_id)
     {
         $conn = parent::connect_db();
@@ -66,6 +94,10 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+
+    /*
+    * This function is used to update post data.
+    */
     function updatePost($post_id, $data_array)
     {
         $category_array = explode(",", $data_array['category']);
@@ -90,6 +122,10 @@ class Users extends Database
 
         $conn->query($sql);
     }
+
+    /*
+    * This function is used to add new category.
+    */
     function addCategory($name)
     {
         $conn = parent::connect_db();
@@ -97,6 +133,10 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+
+    /*
+    * This function is used to add new tag.
+    */
     function addTags($name)
     {
         $conn = parent::connect_db();
@@ -104,6 +144,10 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+
+    /*
+    * This function is used to update tag.
+    */
     function updateTag($id, $name)
     {
         $conn = parent::connect_db();
@@ -111,6 +155,10 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+
+    /*
+    * This function is used to fetch all tags.
+    */
     function getTag($id)
     {
         $conn = parent::connect_db();
@@ -118,6 +166,10 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+
+    /*
+    * This function is used to update category.
+    */
     function updateCategory($id, $name)
     {
         $conn = parent::connect_db();
@@ -125,6 +177,10 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+
+    /*
+    * This function is used to fetch all category.
+    */
     function getCat($id)
     {
         $conn = parent::connect_db();
@@ -132,24 +188,40 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+
+    /*
+    * This function is used to delete tag.
+    */
     function deleteTag($id)
     {
         $conn = parent::connect_db();
         $sql = "DELETE FROM tags WHERE id='$id'";
         $result = $conn->query($sql);
     }
+
+    /*
+    * This function is used to delete category.
+    */
     function deleteCat($id)
     {
         $conn = parent::connect_db();
         $sql = "DELETE FROM categories WHERE id='$id'";
         $result = $conn->query($sql);
     }
+
+    /*
+    * This function is used to delete post.
+    */
     function deletePost($post_id)
     {
         $conn = parent::connect_db();
         $sql = "DELETE FROM posts WHERE id='$post_id'";
         $result = $conn->query($sql);
     }
+
+    /*
+    * This function is used to fetch particular post tags.
+    */
     function myTags($post_id)
     {
         $conn = parent::connect_db();
@@ -157,6 +229,10 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+
+    /*
+    * This function is used to fetch particular posts category.
+    */
     function myCategory($post_id)
     {
         $conn = parent::connect_db();
@@ -164,6 +240,10 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+
+    /*
+    * This function is used to validate fields.
+    */
     function validation_error($id, $msg)
     {
         echo "
