@@ -84,8 +84,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     function addCategory() {
         var xhttp = new XMLHttpRequest()
         var category = document.getElementById('category').value;
+        console.log(category)
         var data = new FormData();
-        FormData.append('category', category);
-        
+        data.append('category', category);
+        console.log(data);
+
     }
 </script>

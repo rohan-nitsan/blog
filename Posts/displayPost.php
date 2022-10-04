@@ -14,7 +14,7 @@ if ($_SESSION['role'] == "2") {
     <?php
     while ($row = $postData->fetch_array()) {
     ?>
-        <div class="card text-center" style="border:2px solid black; width: 1000px;   margin: 15 auto; float: none;margin-bottom: 10px;">
+        <div id="<?php echo $row['id']; ?>" class="card text-center" style="border:2px solid black; width: 1000px;   margin: 15 auto; float: none;margin-bottom: 10px;">
             <div class="card-header">
                 <?php echo $row['author']; ?>
             </div>
@@ -22,27 +22,27 @@ if ($_SESSION['role'] == "2") {
                 <h5 class="card-title"><?php echo $row['title']; ?></h5>
                 <p class="card-text" style=" text-align: justify;text-justify: inter-word;"><?php echo $row['description']; ?></p>
             </div>
-            <p class="card-text" style=" text-align: justify;text-justify: inter-word;">Tags:
+            <!-- <p class="card-text" style=" text-align: justify;text-justify: inter-word;">Tags:
                 <?php
-                    $myTags = $obj->myTags($row['id']);
-                    foreach($myTags as $tag){
-                        foreach($obj->getTag($tag['tag_id']) as $tag){
-                            echo '<span class="badge bg-info" style="margin:2px;">'.$tag['name'].'</span>';
-                        }
-                    }
+                // $myTags = $obj->myTags($row['id']);
+                // foreach($myTags as $tag){
+                //     foreach($obj->getTag($tag['tag_id']) as $tag){
+                //         echo '<span class="badge bg-info" style="margin:2px;">'.$tag['name'].'</span>';
+                //     }
+                // }
                 ?>
             </p>
             <p class="card-text" style=" text-align: justify;text-justify: inter-word;">Categories:
                 <?php
-                    $myCategory = $obj->myCategory($row['id']);
-                   foreach($myCategory as $a){
-                    // echo $a['category_id'];
-                    foreach($obj->getCat($a['category_id']) as $cat){
-                        echo '<span class="badge bg-success" style="margin:2px;">'.$cat['name'].'</span>';
-                    }
-                   }
+                //     $myCategory = $obj->myCategory($row['id']);
+                //    foreach($myCategory as $a){
+                //     // echo $a['category_id'];
+                //     foreach($obj->getCat($a['category_id']) as $cat){
+                //         echo '<span class="badge bg-success" style="margin:2px;">'.$cat['name'].'</span>';
+                //     }
+                //    }
                 ?>
-            </p>
+            </p> -->
             <div class="card-footer text-muted">
                 <?php echo $row['created'];
                 if ($row['author'] == $data['id']) {
@@ -64,16 +64,34 @@ if ($_SESSION['role'] == "2") {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <a href="Posts/deletePost.php?post_id=<?php echo $row['id']; ?>"><button type="button" class="btn btn-danger">Delete</button></a>
+                                    <!-- <a href="Posts/deletePost.php?post_id=<?php echo $row['id']; ?>"><button type="button" class="btn btn-danger">Delete</button></a> -->
+                                    <button class="btn btn-danger" data-bs-dismiss="modal" onclick="deletePost(<?php echo $row['id']; ?>)">Delete</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div id="status"></div>
                 <?php } ?>
             </div>
         </div>
-    <?php
-    }
-
-    ?>
+    <?php } ?>
 </div>
+<script>
+    function deletePost(post_id) {
+        console.log(post_id);
+        var data = new FormData();
+        data.append('post_id', post_id);
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "Posts/deletePost.php", true);
+        // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                var return_data = xhttp.responseText;
+                document.getElementById('status').innerHTML = return_data;
+            }
+        }
+        var remove_div = document.getElementById(post_id);
+        remove_div.parentNode.removeChild(remove_div);
+        xhttp.send(data);
+    }
+</script>

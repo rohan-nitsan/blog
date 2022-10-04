@@ -139,7 +139,41 @@ $myCategory = $obj->myCategory($post_id);
 
     <!-- Initialize Quill editor -->
     <script>
+        var toolbarOptions = [
+            ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+            ['blockquote', 'code-block'],
+            [{
+                'list': 'ordered'
+            }, {
+                'list': 'bullet'
+            }],
+            [{
+                'script': 'sub'
+            }, {
+                'script': 'super'
+            }], // superscript/subscript
+            [{
+                'indent': '-1'
+            }, {
+                'indent': '+1'
+            }], // outdent/indent
+            [{
+                'size': ['small', false, 'large', 'huge']
+            }], // custom dropdown
+            ['image'], // add's image support
+            [{
+                'font': []
+            }],
+            [{
+                'align': []
+            }],
+
+            ['clean'] // remove formatting button
+        ];
         var quill = new Quill('#editor', {
+            modules: {
+                toolbar: toolbarOptions,
+            },
             theme: 'snow'
         });
 
