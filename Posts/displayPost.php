@@ -1,5 +1,7 @@
 <?php
 if ($_SESSION['role'] == "2") {
+    $tags = $obj->getTags();
+    $categories = $obj->getCategory();
 ?>
     <a href="Posts/addPost.php"><button class="btn btn-primary" style="margin: 10px;">New Post</button></a>
     <a href="Category/addCategory.php"><button class="btn btn-primary" style="margin: 10px;">Categories</button></a>
@@ -16,14 +18,28 @@ if ($_SESSION['role'] == "2") {
             <?php
             while ($row = $postData->fetch_array()) {
             ?>
-                <div id="<?php echo $row['id']; ?>" class="card text-center" style="border:2px solid black; width: 1400px;   margin: 15 auto; float: none;margin-bottom: 10px;">
+                <div id="<?php echo $row['id']; ?>" class="card text-center search" style="border:2px solid black;   width: 1400px;   margin: 15 auto; float: none;margin-bottom: 10px;">
                     <div class="card-header">
                         <?php echo $row['author']; ?>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title"><?php echo $row['title']; ?></h5>
+                        <a href="Posts/readPost.php?post_id=<?php echo $row['id']; ?>" style="text-decoration:none; color: black;">
+                            <h5 class="card-title"><?php echo $row['title']; ?></h5>
+                        </a>
                         <p class="card-text" style=" text-align: justify;text-justify: inter-word;"><?php echo "<style>p {width: 700px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}</style>";
                                                                                                     echo $row['description']; ?></p>
+                    </div>
+                    <div class="row">
+                        <p class="card-text" style=" text-align: justify;text-justify: inter-word;">
+                            <?php
+                            $myTags = $obj->myTags($row['id']);
+                            foreach ($myTags as $tag) {
+                                foreach ($obj->getTag($tag['tag_id']) as $tag) {
+                                    echo '<span class="badge bg-info" id="tag" style="margin:3px;">' . $tag['name'] . '</span>';
+                                }
+                            }
+                            ?>
+                        </p>
                     </div>
                     <a href="Posts/readPost.php?post_id=<?php echo $row['id']; ?>"><button class="btn btn-success" style="margin:5px;float:right;">Read Post</button></a>
                     <div class="card-footer text-muted">
@@ -61,29 +77,61 @@ if ($_SESSION['role'] == "2") {
         </div>
     </div>
     <div class="right" style="float: right;">
-        <div class="card text-center" style="border:2px solid black; margin: 20px;">
-            <input id="searchData" onkeyup="search()" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        </div>
+        <form action="">
+            <div class="card text-center" style="border:2px solid black; margin: 20px;">
+                <input id="text" name="text" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            </div>
+            <select class="form-select" name="category" aria-label="Default select example" id="category">
+                <option value="" selected>Search By Category</option>
+                <?php
+                while ($row = $categories->fetch_assoc()) {
+                ?>
+                    <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
+                <?php } ?>
+            </select>
+            <br><br>
+            <select class="form-select" name="tag" aria-label="Default select example" id="tag">
+                <option value="" selected>Search By Tag</option>
+                <?php
+                while ($row = $tags->fetch_assoc()) {
+                ?>
+                    <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
+                <?php } ?>
+            </select><br>
+            <button type="button" onclick="search()" class="btn btn-success">Search</button>
+        </form>
     </div>
 </div>
 <script>
+    // function search() {
+    //     var input = document.getElementById("searchData");
+    //     var filter = input.value.toLowerCase();
+    //     var nodes = document.getElementsByClassName('search');
+
+    //     for (i = 0; i < nodes.length; i++) {
+    //         if (nodes[i].innerText.toLowerCase().includes(filter)) {
+    //             nodes[i].style.display = "block";
+    //         } else {
+    //             nodes[i].style.display = "none";
+    //         }
+    //     }
+    // }
+
     function search() {
-        var input, filter, div, i, txtValue;
-        input = document.getElementById("search_data");
-        filter = input.value.toUpperCase();
-        div = document.getElementById("card");
-        for (i = 0; i < div.length; i++) {
-            td = tr[i].getElementsByTagName("p")[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    div[i].style.display = "";
-                } else {
-                    div[i].style.display = "none";
-                }
-            }
-        }
+        text = document.getElementById('text').value;
+        tag = document.getElementById('tag').value;
+        category = document.getElementById('category').value;
+        data = new FormData();
+        data.append('text', text);
+        data.append('tag', tag);
+        data.append('category', category);
+        console.log(data);
+        xhttp = new XMLHttpRequest()
+
+
     }
+
+
 
     function deletePost(post_id) {
         console.log(post_id);
