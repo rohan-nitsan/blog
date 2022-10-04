@@ -20,8 +20,10 @@ if ($_SESSION['role'] == "2") {
             </div>
             <div class="card-body">
                 <h5 class="card-title"><?php echo $row['title']; ?></h5>
-                <p class="card-text" style=" text-align: justify;text-justify: inter-word;"><?php echo $row['description']; ?></p>
+                <p class="card-text" style=" text-align: justify;text-justify: inter-word;"><?php echo "<style>p {width: 700px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}</style>";
+                                                                                            echo $row['description']; ?></p>
             </div>
+            <a href="Posts/readPost.php?post_id=<?php echo $row['id']; ?>"><button class="btn btn-success" style="margin:5px;float:right;">Read Post</button></a>
             <!-- <p class="card-text" style=" text-align: justify;text-justify: inter-word;">Tags:
                 <?php
                 // $myTags = $obj->myTags($row['id']);
