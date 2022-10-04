@@ -2,10 +2,10 @@
 
 class Database
 {
-    private $host = "localhost";
-    private $username = "root";
-    private $password = "";
-    private $db_name = "blog";
+    private $host = "localhost"; // Host Name
+    private $username = "root"; // User Name
+    private $password = ""; // Password
+    private $db_name = "blog"; // Database Name
 
     function connect_db()
     {
