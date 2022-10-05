@@ -4,7 +4,6 @@ require_once '../Config/connection.php';
 require_once '../App/function.php';
 require_once '../author_nav.php';
 $post_id = $_GET['post_id'];
-
 $obj = new Users();
 $categories = $obj->getCategory();
 $tags = $obj->getTags();

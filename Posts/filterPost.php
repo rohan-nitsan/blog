@@ -1,17 +1,13 @@
 <?php
-require_once 'Config/connection.php';
-require_once 'App/function.php';
-require_once 'author_nav.php';
+session_start();
+require_once '../Config/connection.php';
+require_once '../App/function.php';
 $obj = new Users();
-if ($_SESSION['role'] == "2") {
-    $tags = $obj->getTags();
-    $categories = $obj->getCategory();
-?>
-    <a href="Posts/addPost.php"><button class="btn btn-primary" style="margin: 10px;">New Post</button></a>
-    <a href="Category/addCategory.php"><button class="btn btn-primary" style="margin: 10px;">Categories</button></a>
-    <a href="Tags/addTag.php"><button class="btn btn-primary" style="margin: 10px;">Tags</button></a>
-<?php
-
+$data = $obj->select($_SESSION['email']);
+if ($_POST['text'] == "" and $_POST['category'] == "" and $_POST['tag'] == "") {
+    $postData = $obj->getPosts();
+} else {
+    $postData = $obj->filterPost($_POST);
 }
 
 ?>
@@ -22,7 +18,7 @@ if ($_SESSION['role'] == "2") {
         <div id="status"></div>
         <div class="card" id="card">
             <?php
-            while ($row = $postData->fetch_array()) {
+            while ($row = $postData->fetch_assoc()) {
             ?>
                 <div id="<?php echo $row['id']; ?>" class="card text-center search" style="border:2px solid black;   width: 1400px;   margin: 15 auto; float: none;margin-bottom: 10px;">
                     <div class="card-header">
@@ -81,76 +77,3 @@ if ($_SESSION['role'] == "2") {
             <?php } ?>
         </div>
     </div>
-    <div class="right" style="float: right;">
-        <form action="">
-            <div class="card text-center" style="border:2px solid black; margin: 20px;">
-                <input id="text" name="text" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            </div>
-            <select class="form-select" name="category" aria-label="Default select example" id="category">
-                <option value="" selected>Search By Category</option>
-                <?php
-                while ($row = $categories->fetch_assoc()) {
-                ?>
-                    <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
-                <?php } ?>
-            </select>
-            <br><br>
-            <select class="form-select" name="tag" aria-label="Default select2 example" id="tag2">
-                <option value="" selected>Search By Tag</option>
-                <?php
-                while ($row = $tags->fetch_assoc()) {
-                ?>
-                    <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
-                <?php } ?>
-            </select><br>
-            <button type="button" onclick="search()" class="btn btn-success">Search</button>
-        </form>
-    </div>
-</div>
-<script>
-    function search() {
-        text = document.getElementById('text').value;
-        tag = document.getElementById('tag2').value;
-        category = document.getElementById('category').value;
-        data = new FormData();
-        data.append('text', text);
-        data.append('tag', tag);
-        data.append('category', category);
-        console.log(text, category, tag);
-        xhttp = new XMLHttpRequest()
-        xhttp.open("POST", "Posts/filterPost.php", true)
-        // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        var remove_div = document.getElementById('card');
-        if (remove_div) {
-            remove_div.parentNode.removeChild(remove_div);
-        }
-
-        xhttp.onreadystatechange = function() {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                var return_data = xhttp.responseText;
-                document.getElementById('status').innerHTML = return_data;
-            }
-        }
-        xhttp.send(data);
-    }
-
-
-
-    function deletePost(post_id) {
-        console.log(post_id);
-        var data = new FormData();
-        data.append('post_id', post_id);
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "Posts/deletePost.php", true);
-        // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.onreadystatechange = function() {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                var return_data = xhttp.responseText;
-                document.getElementById('status').innerHTML = return_data;
-            }
-        }
-        var remove_div = document.getElementById(post_id);
-        remove_div.parentNode.removeChild(remove_div);
-        xhttp.send(data);
-    }
-</script>

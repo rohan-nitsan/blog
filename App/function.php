@@ -252,4 +252,39 @@ class Users extends Database
         </script>
     ";
     }
+
+    function filterPost($data)
+    {
+        $conn = parent::connect_db();
+        // if ($data['text'] and $data['category'] and $data['tag']) {
+        // }
+        if ($data['text'] and $data['category']) {
+            $sql = "SELECT * FROM (`posts` INNER JOIN post_category ON post_category.post_id=posts.id) WHERE (post_category.category_id='$data[category]' and ((`description` LIKE '%$data[text]%') or (`title` LIKE '%$data[text]%'))) ORDER BY posts.id DESC";
+            $result = $conn->query($sql);
+            return $result;
+        }
+        if ($data['text'] and $data['tag']) {
+            $sql = "SELECT * FROM (`posts` INNER JOIN post_tags ON post_tags.post_id=posts.id) WHERE (post_tags.tag_id='$data[tag]' and ((`description` LIKE '%$data[text]%') or (`title` LIKE '%$data[text]%'))) ORDER BY posts.id DESC";
+            $result = $conn->query($sql);
+            return $result;
+        }
+        // if ($data['category'] and $data['tag']) {
+        // }
+        if ($data['text']) {
+            $sql = "SELECT * FROM posts WHERE ((`description` LIKE '%$data[text]%') or (`title` LIKE '%$data[text]%')) ORDER BY id DESC";
+            $result = $conn->query($sql);
+            return $result;
+        }
+        if ($data['category']) {
+            $sql = "SELECT * FROM (`posts` INNER JOIN post_category ON post_category.post_id=posts.id) WHERE (post_category.category_id='$data[category]') ORDER BY posts.id DESC";
+            $result = $conn->query($sql);
+            return $result;
+        }
+
+        if ($data['tag']) {
+            $sql = "SELECT * FROM (`posts` INNER JOIN post_tags ON post_tags.post_id=posts.id) WHERE (post_tags.tag_id='$data[tag]') ORDER BY posts.id DESC";
+            $result = $conn->query($sql);
+            return $result;
+        }
+    }
 }
