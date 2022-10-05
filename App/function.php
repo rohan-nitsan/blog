@@ -287,4 +287,19 @@ class Users extends Database
             return $result;
         }
     }
+
+    function addComment($data_array)
+    {
+        $conn = parent::connect_db();
+        $sql = "INSERT INTO comments (user,posts,description) VALUES ('$data_array[user_id]','$data_array[post_id]','$data_array[comment]')";
+        $conn->query($sql);
+    }
+
+    function getComment($post_id)
+    {
+        $conn = parent::connect_db();
+        $sql = "SELECT * FROM comments WHERE posts='$post_id'";
+        $result = $conn->query($sql);
+        return $result;
+    }
 }

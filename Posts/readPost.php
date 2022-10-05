@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once '../Config/connection.php';
 require_once '../App/function.php';
 require_once '../author_nav.php';
@@ -32,12 +32,16 @@ $myCategory = $obj->myCategory($post_id);
                         <div class="card-body p- p-md-3">
                             <div class="row">
                                 <div class="col col-md-10">
-                                    <h2><?php echo $myData['title']; ?></h2>
+                                    <h2>
+                                        <?php echo $myData['title']; ?>
+                                    </h2>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col col-md-10">
-                                    <div id="editor" name="description"><?php echo $myData['description']; ?></div>
+                                    <div id="editor" name="description">
+                                        <?php echo $myData['description']; ?>
+                                    </div>
                                     <p class="error" id="description_error"></p>
                                 </div>
                             </div>
@@ -68,17 +72,70 @@ $myCategory = $obj->myCategory($post_id);
                                 <div class="col col-md-2">
                                     <a href="../index.php"><button type="button" class="btn btn-primary">Back</button></a>
                                 </div>
+
+                                <div class="col col-md-8">
+                                    <p>
+                                        <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                            Add Comment
+                                        </button>
+                                    </p>
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="card card-body">
+                                            <textarea name="" id="comment" cols="500" rows="8"></textarea>
+                                            <button class="btn btn-dark" onclick="addComment()" data-bs-toggle="collapse" data-bs-target="#collapseExample" style="margin: 5px;">Add</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
-
-
+                            <div id="status"></div>
                         </div>
                     </div>
                 </div>
+                <div id="comment_data"></div>
             </div>
+        </div>
+        </div>
         </div>
     </section>
 
     <script src="../Assets/JS/bootstrap.bundle.min.js"></script>
+    <script>
+        xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "displayComment.php", true);
+        data = new FormData();
+        data.append('post_id', <?php echo $_GET['post_id']; ?>)
+        data.append('user_id', <?php echo $_SESSION['id'] ?>)
+        // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                var return_data = xhttp.responseText;
+                document.getElementById('comment_data').innerHTML = return_data;
+            }
+        }
+        xhttp.send(data)
+
+        function addComment() {
+            // alert(document.getElementById('comment').value);
+            var comment = document.getElementById('comment').value;
+            data = new FormData();
+            data.append('comment', comment)
+            data.append('post_id', <?php echo $_GET['post_id']; ?>)
+            data.append('user_id', <?php echo $_SESSION['id'] ?>)
+            xhttp.open("POST", "addComment.php", true);
+            // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    var return_data = xhttp.responseText;
+                    document.getElementById('comment_data').innerHTML = return_data;
+                }
+            }
+            xhttp.send(data)
+            xhttp.open("POST", "displayComment.php", true);
+            xhttp.send(data)
+        }
+    </script>
 </body>
 
 </html>

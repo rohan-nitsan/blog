@@ -3,9 +3,9 @@ require_once 'Config/connection.php';
 require_once 'App/function.php';
 require_once 'author_nav.php';
 $obj = new Users();
+$tags = $obj->getTags();
+$categories = $obj->getCategory();
 if ($_SESSION['role'] == "2") {
-    $tags = $obj->getTags();
-    $categories = $obj->getCategory();
 ?>
     <a href="Posts/addPost.php"><button class="btn btn-primary" style="margin: 10px;">New Post</button></a>
     <a href="Category/addCategory.php"><button class="btn btn-primary" style="margin: 10px;">Categories</button></a>

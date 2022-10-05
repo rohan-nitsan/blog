@@ -18,8 +18,10 @@ if ($_SESSION['email'] && $_SESSION['role']) {
         require_once 'Posts/displayPost.php';
     }
     if ($_SESSION['role'] == 3) {
-        require_once 'user_nav.php';
-        // require_once 'Posts/displayPost.php';
+        // require_once 'user_nav.php';
+        $obj = new Users();
+        $postData = $obj->getPosts();
+        require_once 'Posts/displayPost.php';
     }
 ?>
     
