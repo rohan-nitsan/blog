@@ -302,4 +302,11 @@ class Users extends Database
         $result = $conn->query($sql);
         return $result;
     }
+
+    function deleteComment($id)
+    {
+        $conn = parent::connect_db();
+        $sql = "DELETE FROM comments WHERE id='$id'";
+        $result = $conn->query($sql);
+    }
 }

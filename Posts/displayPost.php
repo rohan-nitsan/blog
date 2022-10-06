@@ -24,7 +24,7 @@ if ($_SESSION['role'] == "2") {
             <?php
             while ($row = $postData->fetch_array()) {
             ?>
-                <div id="<?php echo $row['id']; ?>" class="card text-center search" style="border:2px solid black;   width: 1400px;   margin: 15 auto; float: none;margin-bottom: 10px;">
+                <div id="<?php echo $row['id']; ?>"  class="card text-center search" style="border:2px solid black;   width: 1400px;   margin: 15 auto; float: none;margin-bottom: 10px;">
                     <div class="card-header">
                         <?php echo $row['author']; ?>
                     </div>

@@ -135,6 +135,25 @@ $myCategory = $obj->myCategory($post_id);
             xhttp.open("POST", "displayComment.php", true);
             xhttp.send(data)
         }
+
+        function deleteComment(comment_id) {
+            var data = new FormData();
+            data.append('comment_id', comment_id);
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "deleteComment.php", true);
+            // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    var return_data = xhttp.responseText;
+                    document.getElementById('status').innerHTML = return_data;
+                }
+            }
+            // var remove_div = document.getElementById(comment_id);
+            // console.log(remove_div)
+            // remove_div.parentNode.removeChild(remove_div);
+            xhttp.send(data);
+
+        }
     </script>
 </body>
 
