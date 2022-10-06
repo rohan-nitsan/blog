@@ -20,12 +20,12 @@ if ($_POST['text'] == "" and $_POST['category'] == "" and $_POST['tag'] == "") {
             <?php
             while ($row = $postData->fetch_assoc()) {
             ?>
-                <div id="<?php echo $row['post_id']; ?>" class="card text-center search" style="border:2px solid black;   width: 1400px;   margin: 15 auto; float: none;margin-bottom: 10px;">
+                <div id="<?php echo $row['id']; ?>" class="card text-center search" style="border:2px solid black;   width: 1400px;   margin: 15 auto; float: none;margin-bottom: 10px;">
                     <div class="card-header">
                         <?php echo $row['author']; ?>
                     </div>
                     <div class="card-body">
-                        <a href="Posts/readPost.php?post_id=<?php echo $row['post_id']; ?>" style="text-decoration:none; color: black;">
+                        <a href="Posts/readPost.php?post_id=<?php echo $row['id']; ?>" style="text-decoration:none; color: black;">
                             <h5 class="card-title"><?php echo $row['title']; ?></h5>
                         </a>
                         <p class="card-text" style=" text-align: justify;text-justify: inter-word;"><?php echo "<style>p {width: 700px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}</style>";
@@ -34,7 +34,7 @@ if ($_POST['text'] == "" and $_POST['category'] == "" and $_POST['tag'] == "") {
                     <div class="row">
                         <p class="card-text" style=" text-align: justify;text-justify: inter-word;">
                             <?php
-                            $myTags = $obj->myTags($row['post_id']);
+                            $myTags = $obj->myTags($row['id']);
                             foreach ($myTags as $tag) {
                                 foreach ($obj->getTag($tag['tag_id']) as $tag) {
                                     echo '<span class="badge bg-info" id="tag" style="margin:3px;">' . $tag['name'] . '</span>';
@@ -43,18 +43,18 @@ if ($_POST['text'] == "" and $_POST['category'] == "" and $_POST['tag'] == "") {
                             ?>
                         </p>
                     </div>
-                    <?php echo $row['post_id']; ?>
-                    <a href="Posts/readPost.php?post_id=<?php echo $row['post_id']; ?>"><button class="btn btn-success" style="margin:5px;float:right;">Read Post</button></a>
+                    <?php echo $row['id']; ?>
+                    <a href="Posts/readPost.php?post_id=<?php echo $row['id']; ?>"><button class="btn btn-success" style="margin:5px;float:right;">Read Post</button></a>
                     <div class="card-footer text-muted">
                         <?php echo $row['created'];
                         if ($row['author'] == $data['id']) {
-                            echo "<a style='float:right; color:blue;' href='Posts/editPost.php?post_id=" . $row['post_id'] . "'><button class='btn btn-warning'>Edit</button></a>";
+                            echo "<a style='float:right; color:blue;' href='Posts/editPost.php?post_id=" . $row['id'] . "'><button class='btn btn-warning'>Edit</button></a>";
                         ?>
-                            <button style='float:left;' type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $row['post_id']; ?>">
+                            <button style='float:left;' type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $row['id']; ?>">
                                 Delete
                             </button>
                             <!-- Modal -->
-                            <div class="modal fade" id="exampleModal<?php echo $row['post_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="exampleModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -66,8 +66,8 @@ if ($_POST['text'] == "" and $_POST['category'] == "" and $_POST['tag'] == "") {
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <!-- <a href="Posts/deletePost.php?post_id=<?php echo $row['post_id']; ?>"><button type="button" class="btn btn-danger">Delete</button></a> -->
-                                            <button class="btn btn-danger" data-bs-dismiss="modal" onclick="deletePost(<?php echo $row['post_id']; ?>)">Delete</button>
+                                            <!-- <a href="Posts/deletePost.php?post_id=<?php echo $row['id']; ?>"><button type="button" class="btn btn-danger">Delete</button></a> -->
+                                            <button class="btn btn-danger" data-bs-dismiss="modal" onclick="deletePost(<?php echo $row['id']; ?>)">Delete</button>
                                         </div>
                                     </div>
                                 </div>
